@@ -1,0 +1,754 @@
+/* Keep your existing root variables and base styles */
+:root {
+    --dark-grey: #2a2a2a;
+    --purple: #6a0dad;
+    --mint: #4fffb0;
+    --light-mint: #e6fff4;
+    --container-bg: rgba(42, 42, 42, 0.8);
+    --container-border: rgba(255, 255, 255, 0.1);
+    --container-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Add body styles for login page centering */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--dark-grey);
+    margin: 0;
+    color: white;
+    /* Add these properties for centering the login form */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Override body styles specifically for profile page */
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Reset the centering properties for profile page */
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.login-container {
+    background: var(--dark-grey);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 320px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: subtleGlow 3s infinite alternate;
+    /* Remove any positioning that might interfere with centering */
+    position: relative;
+}
+
+/* Rest of your existing styles remain the same... */
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--mint);
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--mint);
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--purple);
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--mint);
+    background: rgba(106, 13, 173, 0.2);
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #7b1fa2;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+@keyframes subtleGlow {
+    from {
+        box-shadow: 0 8px 16px rgba(106, 13, 173, 0.3);
+    }
+
+    to {
+        box-shadow: 0 8px 24px rgba(79, 255, 176, 0.3);
+    }
+}
+
+/* -------------------------------- Profile Page -------------------------------- */
+
+/* Profile body specific styles */
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Rest of your existing profile page styles remain unchanged... */
+
+
+/* Profile body specific styles */
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header styles (unchanged) */
+.header {
+    width: 100%;
+    background: linear-gradient(to right, var(--dark-grey), rgba(106, 13, 173, 0.2), var(--dark-grey));
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--purple);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.header-left .logo {
+    color: var(--mint);
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+#logoutButton {
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+#logoutButton:hover {
+    background: #7b1fa2;
+}
+
+/* Welcome message */
+.welcome-message {
+    padding: 1.5rem 2rem;
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--mint);
+    letter-spacing: 0.5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.welcome-message #username {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.welcome-message #username:hover {
+    color: var(--mint);
+}
+
+/* Main content area - fixed layout */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    /* Add this */
+}
+
+/* Work container grid - fixed layout */
+.work-container {
+    background: var(--container-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid var(--container-border);
+    box-shadow: var(--container-shadow);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 2rem;
+    min-height: 600px;
+    animation: subtleGlow 3s infinite alternate;
+    box-sizing: border-box;
+    /* Add this */
+    width: 100%;
+    /* Ensure it doesn't exceed container */
+}
+
+/* Stat side - left column */
+.stat-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Updated stat-box to match other containers */
+.stat-box {
+    background: var(--container-bg);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    box-shadow: var(--container-shadow);
+    transition: transform 0.2s ease;
+    border: 1px solid var(--container-border);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: subtleGlow 3s infinite alternate;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-box h3 {
+    color: var(--mint);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.stat-box p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Audit overview - right column */
+.audit-overview {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container {
+    background: var(--container-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--container-border);
+    box-shadow: var(--container-shadow);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    animation: subtleGlow 3s infinite alternate;
+}
+
+.chart-container h3,
+.chart-container h2 {
+    color: var(--mint);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.audit-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.audit-stat-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.audit-stat-label {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.audit-stat-value {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Custom Donut Chart Styles */
+.custom-donut-chart {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.donut-chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(#4CAF50 0deg 0deg,
+            #2196F3 0deg 0deg,
+            transparent 0deg 360deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.donut-chart::before {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: var(--container-bg);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.donut-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.donut-total {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--mint);
+}
+
+.donut-label {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 0.25rem;
+}
+
+.donut-legend {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+}
+
+.legend-color.done {
+    background-color: #4CAF50;
+}
+
+.legend-color.received {
+    background-color: #2196F3;
+}
+
+.project-xp-container {
+    grid-column: 1 / -1;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 650px;
+    /* Increased to accommodate longer labels */
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* Container holds all bars properly - no scrolling */
+.bar-chart-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 0.5rem 0.5rem 80px;
+    /* Increased bottom padding for labels */
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.custom-bar-chart {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 6px;
+    /* Slightly increased gap between bars */
+    height: 400px;
+    padding: 0 15px 20px;
+    /* Increased side padding */
+    border-left: 2px solid var(--mint);
+    border-bottom: none;
+    background: rgba(255, 255, 255, 0.03);
+    width: calc(100% - 30px);
+    /* Adjusted for increased padding */
+    box-sizing: border-box;
+    border-radius: 8px;
+    position: relative;
+    overflow: visible;
+    /* Allow labels to extend outside */
+}
+
+.bar-item {
+    flex: 1 1 0%;
+    min-width: 20px;
+    max-width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+    /* Ensure labels can extend outside */
+}
+
+/* Bar itself - can be much taller now */
+.bar-fill {
+    width: 90%;
+    background: linear-gradient(to top, var(--mint), #81C784);
+    border-radius: 3px 3px 0 0;
+    transition: height 0.3s ease;
+    min-height: 10px;
+    /* Increased minimum height */
+}
+
+/* Value above the bar */
+.bar-value {
+    margin-bottom: 4px;
+    background: var(--purple);
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: absolute;
+    top: -24px;
+    white-space: nowrap;
+}
+
+.bar-item:hover .bar-value {
+    opacity: 1;
+}
+
+.bar-label {
+    font-size: 0.7rem;
+    text-align: center;
+    color: #ccc;
+    white-space: nowrap;
+    position: absolute;
+    bottom: -80px;
+    /* Moved even further down */
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    transform-origin: center;
+    max-width: 200px;
+    /* Increased max-width */
+    overflow: visible;
+    z-index: 1;
+    /* Add text truncation for very long labels */
+    text-overflow: ellipsis;
+    /* Ensure the rotated text doesn't interfere with bars */
+    pointer-events: none;
+}
+
+.bar-label.long-text {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+
+.bar-chart-container {
+    width: 100%;
+    overflow: visible;
+    /* Changed from hidden to visible */
+    padding: 0.5rem 0.5rem 120px;
+    /* Increased bottom padding significantly */
+    flex: 1;
+    box-sizing: border-box;
+}
+
+/* Chart headers */
+.chart-container h2,
+.chart-container h3 {
+    color: var(--mint);
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+
+@media (max-width: 900px) {
+    .bar-chart-container {
+        padding: 0.5rem 0.5rem 130px;
+    }
+
+    .custom-bar-chart::after {
+        bottom: -110px;
+    }
+
+    .bar-label {
+        bottom: -90px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .bar-chart-container {
+        padding: 0.5rem 0.5rem 140px;
+    }
+
+    .bar-label {
+        bottom: -100px;
+        font-size: 0.6rem;
+        max-width: 80px;
+        /* Reduced for mobile */
+    }
+
+    .project-xp-container {
+        min-height: 550px;
+    }
+
+    .custom-bar-chart {
+        height: 250px;
+        gap: 4px;
+        padding: 0 10px 20px;
+    }
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--dark-grey);
+    margin: 10% auto;
+    padding: 2rem;
+    border: 1px solid var(--purple);
+    border-radius: 12px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: subtleGlow 3s infinite alternate;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: var(--mint);
+}
+
+.user-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    color: var(--mint);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.detail-value.loading {
+    font-style: italic;
+    color: var(--mint) !important;
+}
+
+.detail-value.error {
+    color: #ff6b6b !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .work-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .stat-side {
+        flex-direction: row;
+    }
+
+    .stat-box {
+        min-height: 120px;
+    }
+
+    .donut-chart {
+        width: 150px;
+        height: 150px;
+    }
+
+    .donut-chart::before {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-content {
+        padding: 1rem;
+    }
+
+    .work-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .audit-stats {
+        flex-direction: column;
+    }
+
+    .stat-side {
+        flex-direction: column;
+    }
+
+    .donut-legend {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .custom-bar-chart {
+        min-height: 200px;
+        padding: 15px;
+    }
+
+    .bar-fill {
+        width: 30px;
+    }
+
+    .bar-label {
+        font-size: 0.7rem;
+        max-width: 50px;
+    }
+}
+
+.skill-progress {
+    font-size: 1rem;
+    color: var(--mint);
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.donut-chart {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: auto;
+}
+
+.donut-total-text {
+    font-size: 6px;
+    fill: white;
+    font-weight: bold;
+}
+
+.xp-bar-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.bar-chart-container {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 2px solid var(--mint);
+    border-radius: 8px;
+    box-sizing: border-box;
+}

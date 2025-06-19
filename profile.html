@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="profile-body">
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">GraphQL</div>
+        </div>
+
+        <div class="header-right">
+            <button id="logoutButton" class="logout-btn">Log Out</button>
+        </div>
+    </header>
+    <div class="welcome-message">Welcome, <span id="username">Username</span></div>
+
+    <main class="main-content">
+        <div class="work-container">
+            <!-- Left side: Stats stacked vertically -->
+            <div class="stat-side">
+                <div class="stat-box">
+                    <h3>Audit Ratio</h3>
+                    <p id="auditRatio">Loading...</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Passed Projects</h3>
+                    <p id="passedProjects">Loading...</p>
+                </div>
+            </div>
+
+            <!-- Right side: Audit Overview -->
+            <div class="chart-container audit-overview">
+                <h3>Audit Overview</h3>
+                <div class="audit-stats">
+                    <div class="audit-stat-item">
+                        <div class="audit-stat-label">Audits Done</div>
+                        <div id="auditsDone" class="audit-stat-value">Loading...</div>
+                    </div>
+                    <div class="audit-stat-item">
+                        <div class="audit-stat-label">Audits Received</div>
+                        <div id="auditsReceived" class="audit-stat-value">Loading...</div>
+                    </div>
+                </div>
+                <!-- Replace canvas with custom donut chart -->
+                <div class="custom-donut-chart">
+                    <div class="donut-container">
+                        <div id="donutChart" class="donut-chart">
+                            <svg width="160" height="160" viewBox="0 0 42 42" class="donut-svg">
+                                <!-- Background ring -->
+                                <circle class="donut-ring" cx="21" cy="21" r="15.9155" fill="transparent"
+                                    stroke="#e6e6e6" stroke-width="6" />
+
+                                <!-- Donut segments -->
+                                <circle id="doneSlice" class="donut-segment done" cx="21" cy="21" r="15.9155"
+                                    fill="transparent" stroke="#4CAF50" stroke-width="6" stroke-dasharray="0 100"
+                                    stroke-dashoffset="25" />
+
+                                <circle id="receivedSlice" class="donut-segment received" cx="21" cy="21" r="15.9155"
+                                    fill="transparent" stroke="#2196F3" stroke-width="6" stroke-dasharray="0 100"
+                                    stroke-dashoffset="25" />
+
+                                <!-- Hollow center circle added last so it's on top -->
+                                <circle cx="21" cy="21" r="10" fill="#1e1e1e" />
+                            </svg>
+
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item">
+                                <div class="legend-color done"></div>
+                                <span>Audits Done</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color received"></div>
+                                <span>Audits Received</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom: Project XP (spans full width) -->
+            <div class="chart-container project-xp-container">
+                <h2>Project XP</h2>
+                <div id="xpChartContainer">
+                    <div id="loadingOverlay" class="loading-overlay" style="display:none;">Loading...</div>
+                    <div id="xpBarChart" class="bar-chart-container"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Profile Information</h2>
+            <div class="user-details">
+                <div class="detail-item">
+                    <span class="detail-label">Full Name:</span>
+                    <span id="modalFullName" class="detail-value">Loading...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email:</span>
+                    <span id="modalEmail" class="detail-value">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+
+</html>
