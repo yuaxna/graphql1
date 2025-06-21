@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadUserStats(token);
     loadXPChart(token);
     loadPassedProjects(token);
+    loadXPTimelineChart(token);
 
     // Close modal handlers
     closeModal.addEventListener('click', () => modal.style.display = 'none');
@@ -398,4 +399,148 @@ async function loadPassedProjects(token) {
         console.error('Failed to load passed projects:', error);
         document.getElementById('passedProjects').textContent = 'Error loading';
     }
+}
+
+async function loadXPTimelineChart(token) {
+    try {
+        const response = await fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        transaction(
+                            where: {
+                                type: {_eq: "xp"},
+                                object: {type: {_eq: "project"}}
+                            },
+                            order_by: {createdAt: asc},
+                            limit: 1000
+                        ) {
+                            createdAt
+                            amount
+                        }
+                    }
+                `
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok || result.errors) {
+            throw new Error(result.errors?.[0]?.message || 'Error fetching XP timeline');
+        }
+
+        const xpData = result.data.transaction;
+        const grouped = groupXPByDay(xpData);
+        renderXPTimelineChart(grouped);
+
+    } catch (error) {
+        console.error("XP timeline chart error:", error);
+        document.getElementById('xpTimelineChart').innerHTML = '<p style="color:red; text-align: center;">Failed to load XP timeline</p>';
+    }
+}
+
+function groupXPByDay(data) {
+    const xpByDate = {};
+    data.forEach(tx => {
+        const date = new Date(tx.createdAt).toISOString().slice(0, 10); // YYYY-MM-DD
+        xpByDate[date] = (xpByDate[date] || 0) + tx.amount;
+    });
+
+    return Object.entries(xpByDate).map(([date, amount]) => ({
+        date,
+        amount
+    }));
+}
+
+async function loadXPTimelineChart(token) {
+    try {
+        const response = await fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        transaction(
+                            where: {
+                                type: {_eq: "xp"},
+                                object: {type: {_eq: "project"}}
+                            },
+                            order_by: {createdAt: asc},
+                            limit: 1000
+                        ) {
+                            createdAt
+                            amount
+                        }
+                    }
+                `
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok || result.errors) {
+            throw new Error(result.errors?.[0]?.message || 'Error fetching XP timeline');
+        }
+
+        const xpData = result.data.transaction;
+        const groupedData = groupXPByDay(xpData);
+        renderXPTimelineChart(groupedData);
+
+    } catch (error) {
+        console.error("XP timeline chart error:", error);
+        const container = document.getElementById('xpTimelineChart');
+        if (container) {
+            container.innerHTML = '<p style="color:red; text-align:center;">Failed to load XP timeline</p>';
+        }
+    }
+}
+
+function groupXPByDay(data) {
+    const grouped = {};
+    data.forEach(entry => {
+        const date = new Date(entry.createdAt).toISOString().slice(0, 10); // "YYYY-MM-DD"
+        grouped[date] = (grouped[date] || 0) + entry.amount;
+    });
+
+    return Object.entries(grouped).map(([date, amount]) => ({ date, amount }));
+}
+
+function renderXPTimelineChart(data) {
+    const container = document.getElementById('xpTimelineChart');
+    if (!container || data.length === 0) return;
+
+    const width = 1100;   // match bar chart viewBox width
+    const height = 300;   // match vertical scale
+    const padding = 50;
+
+    const maxXP = Math.max(...data.map(d => d.amount));
+    const pointCount = data.length;
+
+    const points = data.map((d, i) => {
+        const x = padding + (i / (pointCount - 1)) * (width - 2 * padding);
+        const y = height - padding - (d.amount / maxXP) * (height - 2 * padding);
+        return { x, y, date: d.date, amount: d.amount };
+    });
+
+    const pathData = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
+
+    const svg = `
+        <svg viewBox="0 0 ${width} ${height}" class="xp-timeline-svg">
+            <path d="${pathData}" fill="none" stroke="#4CAF50" stroke-width="2"/>
+            ${points.map(p => `
+                <circle cx="${p.x}" cy="${p.y}" r="3" fill="#4CAF50" />
+                <text x="${p.x}" y="${p.y - 10}" text-anchor="middle" font-size="10" fill="#ccc">
+                    ${(p.amount / 1000).toFixed(1)}k
+                </text>
+            `).join('')}
+        </svg>
+    `;
+
+    container.innerHTML = svg;
 }

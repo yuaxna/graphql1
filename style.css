@@ -752,3 +752,19 @@ button:hover {
     border-radius: 8px;
     box-sizing: border-box;
 }
+
+.xp-timeline-svg {
+    width: 100%;
+    height: auto;
+}
+
+.line-chart-container {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .xp-timeline-svg {
+        min-width: 100%;
+    }
+}
